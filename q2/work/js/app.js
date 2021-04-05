@@ -10,7 +10,7 @@ $(function(){
   $('.modal_close_button').on('click', function(){
     // モーダルウィンドを閉じる
     $('.modal_win').fadeOut();
-    // 閉じる操作を引き続き起こさないように記述
+    //  閉じる操作を引き続き起こさないように記述
     return false;
   });
 });

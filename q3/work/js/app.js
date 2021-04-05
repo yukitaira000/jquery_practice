@@ -13,7 +13,7 @@ $(function(){
     $('.drawer_bg').fadeOut();
     // .drawer_buttonにつけたactiveクラスを削除し、メニューボタンを初めのハンバーガーメニューに戻す
     $('.drawer_button').removeClass('active');
-    // .drawer_nav_wrapperにつけたopenクラスを削除しメニューの内容を非表示にする
+    //  .drawer_nav_wrapperにつけたopenクラスを削除しメニューの内容を非表示にする
     $('.drawer_nav_wrapper').removeClass('open')
   });
 });

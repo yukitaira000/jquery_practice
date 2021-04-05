@@ -47,7 +47,7 @@ $(function(){
     console.log($('#tel').val());
 
     console.log('購読情報');
-    // 複数の項目を選択した場合も値が取得できるように、.each()を使用し値を取得しコンソールに表示
+    // 　複数の項目を選択した場合も値が取得できるように、.each()を使用し値を取得しコンソールに表示
     ($('[name="subscription"]:checked').each(function(){
       console.log($(this).val())
     })
