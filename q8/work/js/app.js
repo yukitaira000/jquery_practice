@@ -7,7 +7,7 @@
 //   const result = response['@graph'];
 //   displayResult(result)
 // }).fail(function (err) {
-  //   displayError(err)
+  //    displayError(err)
 // })
 
 
