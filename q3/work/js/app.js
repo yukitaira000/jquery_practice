@@ -8,7 +8,7 @@ $(function(){
     // .drawer_nav_wrapperにopenクラスを追加して、メニューの内容を表示
     $('.drawer_nav_wrapper').toggleClass('open')});
     // .drawer_button activeがクリックされた時
-  $('.drawer_button active').on('click',function(){
+  $('.drawer_button active, .drawer_bg').on('click',function(){
     // .drawer_bgをフェードアウトし非表示にする
     $('.drawer_bg').fadeOut();
     // .drawer_buttonにつけたactiveクラスを削除し、メニューボタンを初めのハンバーガーメニューに戻す

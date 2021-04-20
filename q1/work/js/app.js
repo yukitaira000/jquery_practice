@@ -50,8 +50,8 @@ $(function(){
   $('#q6').on('click', function(){
     // 2秒かけてmargin-top.margin-left:100pxの位置に移動
     $(this).animate({
-      'marginTop': '100px',
-      'marginLeft': '100px'
+      'margin-top': '100px',
+      'margin-left': '100px'
     },
     // 2秒を表している
     2000
