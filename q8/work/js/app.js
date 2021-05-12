@@ -11,16 +11,28 @@
 // })
 
 $(function(){
-  // ページの初期値は1
-  var pageCount = 1, differentWord = "";
-  // 検索ボタンをクリックしたとき
+  // ページカウントの初期値
+  let pageCount = 1;
+  // 検索ワードに変化が無かった場合の変数
+  let continueSearch = "";
+  // 検索ボタンをクリックした時
   $('.search-btn').on('click', function(){
     // searchWordに検索ワードに入力した値を代入
-    var searchWord = $('#search-input').val();
-    // searchWordの中身が異なる場合、ページ数を1に、.listsクラスの子要素を削除、検索ワードをsearchWordに代入する。
-    // 同じ検索ワードの場合、ページを追加して表示
-    searchWord !== differentWord ? (pageCount = 1,$('.lists').empty(), differentWord = searchWord) : pageCount++;
-    // ajaxの読み込み
+    const searchWord = $('#search-input').val();
+    // 検索ワードの値が同じでは無かった場合
+    if(searchWord !== continueSearch){
+      // .listsクラスの子クラスを削除する
+      $('.lists').empty();
+      // ページカウントを1に戻す
+      pageCount =1;
+      // continueSearchに検索ワードに代入された値を代入する
+      continueSearch = searchWord;
+      // 検索ワードが同じだった場合
+    }else{
+      // ページを追加し次の20件を追加表示
+      pageCount++;
+    }
+    // API
     const settings = {
       url: `https://ci.nii.ac.jp/books/opensearch/search?title=${searchWord}&format=json&p=${pageCount}&count=20`,
       method: "GET",
@@ -28,35 +40,29 @@ $(function(){
     $.ajax(settings).done(function (response) {
       const result = response['@graph'];
       displayResult(result)
-      console.log(result)
-    })
-    .fail(function (err) {
+      // console.log(result)
+      // console.log(pageCount)
+    }).fail(function (err) {
       displayError(err)
-      // console.log(err);
     })
   })
-  // 通信成功時の関数
+  // 通信成功時の処理
   function displayResult(searchResult){
-    // messageクラスの要素を削除
+    // messageクラスを削除
     $('.message').remove();
-    // 検索結果があれば
+    // 検索結果が有った時
     if(searchResult[0].items){
-      // 検索結果内の情報を取得
-      $.each(searchResult[0].items, function(status, books){
-        // statusにDOMの要素を代入
-        // タイトル情報はbooks.titleに取得、取得できなかった場合はタイトル不明
-        // 作者情報はbooks['dc:creator']で取得、取得できなかった場合は作者不明
-        // 出版社はbooks['dc:publisher']で取得、取得できなかった場合は出版社不明
-        // 書籍情報はbooks.link['@id']にリンク先として取得
-        var status = '<li class="list-item"><div class="list-inner"><p>タイトル：' + ((books.title ? books.title : 'タイトル不明') + '</p><p>作者：') + ((books['dc:creator'] ? books['dc:creator'] : '作者不明') + '</p><p>出版社：' + ((books['dc:publisher'] ? books['dc:publisher'] : '出版社不明') + '</p><a href= "') + ((books.link['@id']) + 'target = "_blank">書籍情報</a></div></li>'));
+      // 検索結果内のindex番号と値を取得
+      $.each(searchResult[0].items,function(index, books){
+        const status = '<li class="list-item"><div class="list-inner"><p>タイトル：' + ((books.title ? books.title : 'タイトル不明') + '</p><p>作者：') + ((books['dc:creator'] ? books['dc:creator'] : '作者不明') + '</p><p>出版社：' + ((books['dc:publisher'] ? books['dc:publisher'] : '出版社不明') + '</p><a href= "') + ((books.link['@id']) + 'target = "_blank">書籍情報</a></div></li>'));
         $('.lists').prepend(status);
       })
-      // 検索結果が無かった場合
+      // 検索結果が見つからなかった場合
     }else{
       $('.lists').before('<div class="message">検索結果が見つかりませんでした。<br>別のキーワードで検索して下さい。</div>')
     }
   }
-  // 通信失敗した場合
+  // 通信エラー時の処理
   function displayError(errMessage){
     // .listsクラスの子要素を削除
     $('.lists').empty();
@@ -79,6 +85,10 @@ $(function(){
   }
   // リセットボタンを押下時
   $('.reset-btn').on('click', function(){
+    // ページカウントを1に
+    pageCount = 1;
+    // continueSearchにsearchWordが代入されるようになっている事もあるため、元の値「""」を代入し元に戻す
+    continueSearch = "";
     // .listsの子要素を削除
     $('.lists').empty();
     // .messageクラスを削除

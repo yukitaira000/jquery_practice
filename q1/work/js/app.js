@@ -50,8 +50,8 @@ $(function(){
   $('#q6').on('click', function(){
     // 2秒かけてmargin-top.margin-left:100pxの位置に移動
     $(this).animate({
-      'margin-top': '100px',
-      'margin-left': '100px'
+      'margin-top': '100',
+      'margin-left': '100'
     },
     // 2秒を表している
     2000
@@ -87,7 +87,7 @@ $(function(){
   // リストのボタンがクリックされた時に
   $('#q9 li').on('click', function(){
     // thisを使用し押されたボタンのindex番号を取得
-    var index = $(this).index();
+    const index = $(this).index();
     // 取得されたindex番号をアラートで表示
     alert(index);
   });
@@ -98,7 +98,7 @@ $(function(){
   // q10のボタンをクリックした時に
   $('#q10 li').on('click',function(){
     // クリックした要素を取得
-    var index = $(this).index();
+    const index = $(this).index();
     // 取得した要素をコンソールに表示、index番号をeq(index)のindexに追加→q11 liのindex番号とq10 liのindex番号を結びつける
     console.log($('#q11 li').eq(index));
     //クリックされたq10の要素と結びついているq11のliにクラス名'large-text'を追加し、large-textに指定されたcssを適用させる。
